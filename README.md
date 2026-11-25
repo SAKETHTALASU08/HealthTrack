@@ -230,15 +230,36 @@ curl -s "http://127.0.0.1:8000/api/patients/patient-001/insights"
 4. **Provider views:** Add provider-specific endpoints to manage assigned patient rosters, clinical notes, and CSV/PDF export.
 
 ---
+## AI Usage
 
-Changed and Verified by Me
+AI tools were used in this project, as permitted by the task. Here is what was used, where, and how I checked it.
 
-Found that the generated code accepted a 100-character patient ID despite the intended 64-character limit; added schema, path-parameter, and frontend validation, along with tests.
+### Tools used
+- **Claude (Anthropic):** used to write the build prompts, plan the architecture, and draft the README structure and commit plan.
+- **Antigravity:** used to generate the code from those prompts.
+- 
+### Parts the AI touched
+- Project scaffolding and folder structure (FastAPI app, routers, schemas, CRUD layer)
+- SQLAlchemy `SymptomLog` model and the database setup
+- Pydantic validation rules for the symptom endpoint
+- API endpoints for submitting symptoms, listing a patient's logs, and the 30-day trend
+- Unit and API tests (pytest)
+- Front-end: form, history table, error handling, Chart.js trend chart
+- UI redesign and layout refinement (dashboard layout, dark mode, toasts, spacing)
+- README structure and the plan for splitting work into commits
 
-Reviewed and corrected timestamp handling to ensure consistent UTC storage and chronological sorting.
+### What I verified or changed afterwards
+**Verified**
+- Read through the validation rules and confirmed that empty or whitespace-only descriptions and severity values outside 1-10 are rejected, in both the API schema and the database constraint
+- Ran `pytest -v` and confirmed all tests pass
+- Manually tested invalid inputs in the browser (empty description, severity out of range, non-numeric severity)
+- Stopped the server and submitted the form to confirm the network-error message appears
+- Tested an HTML/script payload in the description to confirm it is rendered as plain text (no XSS)
+- Confirmed logs are returned in ascending timestamp order and that one patient cannot see another patient's logs
+- Checked the layout at desktop and mobile widths and in dark mode
 
-Tested duplicate timestamps, empty symptom descriptions, invalid severity values, and missing patient IDs.
-
-Verified that the application correctly stores and retrieves symptom records for individual patients.
-
-Tested frontend error handling and severity trend visualizations.
+**Changed by me**
+- Found that the generated code accepted a 100-character patient ID despite the intended 64-character limit; added schema, path-parameter, and frontend validation plus tests.
+- Added validation to reject whitespace-only symptom descriptions before processing submissions.
+- Improved timestamp handling to ensure consistent UTC storage and chronological sorting.
+- Added tests for invalid severity values, duplicate timestamps, and missing or invalid input fields.
