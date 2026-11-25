@@ -2,9 +2,8 @@
 
 A lightweight, production-style symptom-tracking web application built with **FastAPI**, **SQLAlchemy 2.x**, **SQLite**, and **vanilla HTML/CSS/JS** with **Chart.js**. Patients can log symptoms with a 1–10 severity rating, review their chronological history, and visualize 30-day severity trends and insights.
 
-> **Screenshot**
->
-> _[Placeholder: Add screenshots of the HealthTrack dashboard in both light mode and dark mode showing the sticky navbar, summary stat cards, severity slider form, 30-day gradient trend chart, and searchable symptom history table.]_
+<img width="1331" height="792" alt="Screenshot 2026-11-25 at 7 18 34 PM" src="https://github.com/user-attachments/assets/f426f9ab-b6f5-45fd-8287-df75e793bdb5" />
+
 
 ---
 
@@ -232,9 +231,14 @@ curl -s "http://127.0.0.1:8000/api/patients/patient-001/insights"
 
 ---
 
-## AI Usage
+Changed and Verified by Me
 
-> _Fill in honestly before submitting:_
-> - **Tools used:** _[e.g., Antigravity / Claude / ChatGPT / Copilot]_
-> - **Which parts they touched:** _[e.g., initial project scaffolding, Pydantic schema validators, Chart.js setup, unit/API tests]_
-> - **What I verified or changed afterwards:** _[e.g., reviewed all validation rules, ran `pytest -v` and verified all tests pass, tested XSS payloads and error banners manually in the browser]_
+Found that the generated code accepted a 100-character patient ID despite the intended 64-character limit; added schema, path-parameter, and frontend validation, along with tests.
+
+Reviewed and corrected timestamp handling to ensure consistent UTC storage and chronological sorting.
+
+Tested duplicate timestamps, empty symptom descriptions, invalid severity values, and missing patient IDs.
+
+Verified that the application correctly stores and retrieves symptom records for individual patients.
+
+Tested frontend error handling and severity trend visualizations.
